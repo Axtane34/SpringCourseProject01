@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.axtane.springMVC.dao.BookDAO;
 import ru.axtane.springMVC.dao.PersonDAO;
+import ru.axtane.springMVC.models.Book;
 import ru.axtane.springMVC.models.Person;
 
 import javax.validation.Valid;

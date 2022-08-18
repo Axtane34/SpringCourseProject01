@@ -5,7 +5,6 @@
     <title>Пользователи</title>
 </head>
 <body>
-
  <div th:each="person : ${people}">
      <a th:href="@{/people/{id}(id=${person.getPerson_id()})}"
         th:text="${person.getFio() + ', '} + ${person.getYearOfBirth()}">user</a>

@@ -2,12 +2,14 @@ package ru.axtane.springMVC.models;
 
 public class Book {
     private int book_id;
+    private Integer person_id = null;
     private String name;
     private String author;
     private int yearOfWriting;
 
-    public Book(int book_id, String name, String author, int yearOfWriting) {
+    public Book(int book_id, Integer person_id, String name, String author, int yearOfWriting) {
         this.book_id = book_id;
+        this.person_id = person_id;
         this.name = name;
         this.author = author;
         this.yearOfWriting = yearOfWriting;
@@ -22,6 +24,14 @@ public class Book {
 
     public void setBook_id(int book_id) {
         this.book_id = book_id;
+    }
+
+    public Integer getPerson_id() {
+        return person_id;
+    }
+
+    public void setPerson_id(Integer person_id) {
+        this.person_id = person_id;
     }
 
     public String getName() {
