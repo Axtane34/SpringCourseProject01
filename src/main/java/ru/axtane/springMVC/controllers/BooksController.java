@@ -12,6 +12,7 @@ import ru.axtane.springMVC.models.Book;
 import ru.axtane.springMVC.models.Person;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/books")
@@ -40,28 +41,33 @@ public class BooksController {
         }
         return "books/show";
     }
+    //Для будущих решений
+   /* @GetMapping("/{id}")
+    public String show(@PathVariable("id") int id, Model model, @ModelAttribute("person") Person person) {
+        model.addAttribute("book", bookDAO.show(id));
+
+        Optional<Person> bookOwner = personDAO.show(bookDAO.show(id).getPerson_id());
+
+        if (bookOwner.isPresent())
+            model.addAttribute("owner", bookOwner.get());
+        else
+            model.addAttribute("people", personDAO.index());
+
+        return "books/show";
+    }*/
 
     @PatchMapping("/{id}/addOwner")
-    public String editOwner(@ModelAttribute("person") Person person, BindingResult bindingResult,
+    public String editOwner(@ModelAttribute("person") Person person,
                             RedirectAttributes redirectAttributes, @PathVariable("id") int id){
         redirectAttributes.addAttribute("id", id);
-        if (bindingResult.hasErrors())
-            return "books/show";
-        if(bookDAO.show(id).getPerson_id() == null || bookDAO.show(id).getPerson_id()!=person.getPerson_id()) {
             bookDAO.updateOwner(id, person.getPerson_id());
-        }
         return "redirect:/books/{id}";
     }
 
     @PatchMapping("/{id}/deleteOwner")
-    public String deleteOwner(@ModelAttribute("person") Person person, BindingResult bindingResult,
-                            RedirectAttributes redirectAttributes, @PathVariable("id") int id){
+    public String deleteOwner(RedirectAttributes redirectAttributes, @PathVariable("id") int id){
         redirectAttributes.addAttribute("id", id);
-        if (bindingResult.hasErrors())
-            return "books/show";
-        if(bookDAO.show(id).getPerson_id()!=null) {
             bookDAO.deleteOwner(id);
-        }
         return "redirect:/books/{id}";
     }
 
