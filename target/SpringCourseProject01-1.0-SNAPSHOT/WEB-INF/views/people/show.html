@@ -6,14 +6,14 @@
 </head>
 <body>
     <p th:text="${person.getFio()} + ${', ' + person.getYearOfBirth()}">VALUE</p>
-    <div th:if="${books.isEmpty()}">
+    <div th:if="${person.getBooks().isEmpty() || person.getBooks().equals(null)}">
     <p>Человек пока не взял ни одной книги</p>
     <hr>
     </div>
-    <div th:if="${!books.isEmpty()}">
+    <div th:if="${!person.getBooks().isEmpty()}">
         <hr>
     <p>Книги:</p>
-    <p th:each="book : ${books}"
+    <p th:each="book : ${person.getBooks()}"
        th:text="${book.getName() + ', '} + ${book.getAuthor() + ', '} + ${book.getYearOfWriting()}"></p>
         <hr>
     </div>
