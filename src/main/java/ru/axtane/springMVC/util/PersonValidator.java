@@ -25,7 +25,6 @@ public class PersonValidator implements Validator {
     @Override
     public void validate(Object o, Errors errors) {
         Person person = (Person) o;
-
         if (personDAO.show(person.getFio()).isPresent()) {
             errors.rejectValue("fio", "", "This FIO is already in use");
         }

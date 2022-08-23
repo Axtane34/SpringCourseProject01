@@ -12,7 +12,6 @@ import ru.axtane.springMVC.models.Book;
 import ru.axtane.springMVC.models.Person;
 
 import javax.validation.Valid;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/books")
@@ -33,12 +32,12 @@ public class BooksController {
     }
 
     @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id, Model book, Model people, Model owner, @ModelAttribute("person") Person person){
+    public String show(@PathVariable("id") int id, Model book, Model people, @ModelAttribute("person") Person person){
         book.addAttribute("book", bookDAO.show(id));
         people.addAttribute("people", personDAO.index());
-        if (bookDAO.show(id).getPerson_id()!=null){
-            owner.addAttribute("owner", personDAO.show(bookDAO.show(id).getPerson_id()));
-        }
+        /*if (bookDAO.show(id).getOwner()!=null){
+            owner.addAttribute("owner", personDAO.show(bookDAO.show(id).getOwner().getPerson_id()));
+        }*/
         return "books/show";
     }
     //Для будущих решений

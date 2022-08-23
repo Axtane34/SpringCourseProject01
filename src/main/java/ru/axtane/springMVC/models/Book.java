@@ -1,15 +1,26 @@
 package ru.axtane.springMVC.models;
 
+import javax.persistence.*;
+
+
+@Entity
+@Table(name = "book")
 public class Book {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "book_id")
     private int book_id;
-    private Integer person_id = null;
+    @ManyToOne
+    @JoinColumn(name = "person_id", referencedColumnName = "person_id")
+    private Person owner;
+    @Column(name = "name")
     private String name;
+    @Column(name = "author")
     private String author;
+    @Column(name = "yearofwriting")
     private int yearOfWriting;
 
-    public Book(int book_id, Integer person_id, String name, String author, int yearOfWriting) {
-        this.book_id = book_id;
-        this.person_id = person_id;
+    public Book(String name, String author, int yearOfWriting) {
         this.name = name;
         this.author = author;
         this.yearOfWriting = yearOfWriting;
@@ -26,12 +37,12 @@ public class Book {
         this.book_id = book_id;
     }
 
-    public Integer getPerson_id() {
-        return person_id;
+    public Person getOwner() {
+        return owner;
     }
 
-    public void setPerson_id(Integer person_id) {
-        this.person_id = person_id;
+    public void setOwner(Person owner) {
+        this.owner = owner;
     }
 
     public String getName() {
@@ -56,5 +67,11 @@ public class Book {
 
     public void setYearOfWriting(int yearOfWriting) {
         this.yearOfWriting = yearOfWriting;
+    }
+
+    public static void updateBook(Book book, Book updatedBook){
+        book.setAuthor(updatedBook.getAuthor());
+        book.setName(updatedBook.getName());
+        book.setYearOfWriting(updatedBook.getYearOfWriting());
     }
 }

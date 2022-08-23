@@ -62,6 +62,12 @@
     </dependency>
 
     <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-orm</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+
+    <dependency>
       <groupId>org.thymeleaf</groupId>
       <artifactId>thymeleaf-spring5</artifactId>
       <version>3.1.0.M2</version>
@@ -106,6 +112,13 @@
       <artifactId>spark-template-freemarker</artifactId>
       <version>2.0.0</version>
     </dependency>
+
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <version>5.4.28.Final</version>
+    </dependency>
+
 
   </dependencies>
 
