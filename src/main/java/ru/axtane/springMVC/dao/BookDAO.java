@@ -3,7 +3,6 @@ package ru.axtane.springMVC.dao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import ru.axtane.springMVC.models.Book;
@@ -13,12 +12,10 @@ import java.util.List;
 
 @Component
 public class BookDAO {
-    private final JdbcTemplate jdbcTemplate;
     private final SessionFactory sessionFactory;
 
     @Autowired
-    public BookDAO(JdbcTemplate jdbcTemplate, SessionFactory sessionFactory) {
-        this.jdbcTemplate = jdbcTemplate;
+    public BookDAO(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
@@ -33,16 +30,8 @@ public class BookDAO {
     public Book show(int id){
         Session session = sessionFactory.getCurrentSession();
         return session.get(Book.class, id);
-       /* return jdbcTemplate.query("SELECT * FROM book WHERE book_id=?",
-                new Object[]{id}, new BeanPropertyRowMapper<>(Book.class)).stream().findAny().orElse(null);*/
     }
-    @Transactional(readOnly = true)
-    public List<Book> showByPersonId(int id){
-        Session session = sessionFactory.getCurrentSession();
-        return session.get(Person.class, id).getBooks();
-        /*return jdbcTemplate.query("SELECT * FROM book WHERE person_id=?",
-                new Object[]{id}, new BeanPropertyRowMapper<>(Book.class));*/
-    }
+
     @Transactional
     public void save(Book book){
         Session session = sessionFactory.getCurrentSession();
