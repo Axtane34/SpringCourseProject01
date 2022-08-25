@@ -32,14 +32,14 @@ public class PersonDAO {
         *//*return jdbcTemplate.query("SELECT * FROM person WHERE person_id=?",
                 new Object[]{id}, new BeanPropertyRowMapper<>(Person.class)).stream().findAny().orElse(null);*//*
     }*/
-    @Transactional(readOnly = true)
+    /*@Transactional(readOnly = true)
     public Optional<Person> show(String fio){
-        /*EntityManager entityManager = entityManagerFactory.createEntityManager();
+        *//*EntityManager entityManager = entityManagerFactory.createEntityManager();
         Person person = entityManager.createQuery("from Person where fio=:fio", Person.class).setParameter("fio", fio).getSingleResult();
-        return person;*/
+        return person;*//*
         return jdbcTemplate.query("SELECT * FROM person WHERE fio=?",
                 new Object[]{fio}, new BeanPropertyRowMapper<>(Person.class)).stream().findAny();
-    }
+    }*/
     /*@Transactional
     public void save(Person person){
         EntityManager entityManager = entityManagerFactory.createEntityManager();

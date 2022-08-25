@@ -8,9 +8,7 @@ import ru.axtane.springMVC.models.Person;
 import ru.axtane.springMVC.repositories.BooksRepository;
 import ru.axtane.springMVC.repositories.PeopleRepository;
 
-import javax.persistence.EntityManager;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
