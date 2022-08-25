@@ -1,5 +1,6 @@
 package ru.axtane.springMVC.services;
 
+import org.hibernate.Hibernate;
 import org.hibernate.criterion.Example;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -27,6 +28,7 @@ public class PeopleService {
     }
 
     public Person findById(int id){
+        peopleRepository.findById(id).ifPresent(person -> Hibernate.initialize(person.getBooks()));
         return peopleRepository.findById(id).orElse(null);
     }
 

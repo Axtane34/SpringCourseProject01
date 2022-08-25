@@ -24,7 +24,7 @@ public class Person {
     @Column(name = "yearofbirth")
     private int yearOfBirth;
 
-    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "owner")
     private List<Book> books = new ArrayList<>();
 
     public Person(String fio, int yearOfBirth) {
