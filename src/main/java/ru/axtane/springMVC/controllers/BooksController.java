@@ -6,35 +6,35 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import ru.axtane.springMVC.dao.BookDAO;
-import ru.axtane.springMVC.dao.PersonDAO;
 import ru.axtane.springMVC.models.Book;
 import ru.axtane.springMVC.models.Person;
+import ru.axtane.springMVC.services.BooksService;
+import ru.axtane.springMVC.services.PeopleService;
 
 import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/books")
 public class BooksController {
-    private final BookDAO bookDAO;
-    private final PersonDAO personDAO;
+    private final PeopleService peopleService;
+    private final BooksService booksService;
 
     @Autowired
-    public BooksController(BookDAO bookDAO, PersonDAO personDAO) {
-        this.bookDAO = bookDAO;
-        this.personDAO = personDAO;
+    public BooksController(PeopleService peopleService, BooksService booksService) {
+        this.peopleService = peopleService;
+        this.booksService = booksService;
     }
 
     @GetMapping
     public String index(Model model){
-        model.addAttribute("books", bookDAO.index());
+        model.addAttribute("books", booksService.findAll());
         return "books/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model book, Model people, @ModelAttribute("person") Person person){
-        book.addAttribute("book", bookDAO.show(id));
-        people.addAttribute("people", personDAO.index());
+        book.addAttribute("book", booksService.findById(id));
+        people.addAttribute("people", peopleService.findAll());
         /*if (bookDAO.show(id).getOwner()!=null){
             owner.addAttribute("owner", personDAO.show(bookDAO.show(id).getOwner().getPerson_id()));
         }*/
@@ -59,14 +59,14 @@ public class BooksController {
     public String editOwner(@ModelAttribute("person") Person person,
                             RedirectAttributes redirectAttributes, @PathVariable("id") int id){
         redirectAttributes.addAttribute("id", id);
-            bookDAO.updateOwner(id, person.getPerson_id());
+            booksService.updateOwner(id, person.getPerson_id());
         return "redirect:/books/{id}";
     }
 
     @PatchMapping("/{id}/deleteOwner")
     public String deleteOwner(RedirectAttributes redirectAttributes, @PathVariable("id") int id){
         redirectAttributes.addAttribute("id", id);
-            bookDAO.deleteOwner(id);
+            booksService.deleteOwner(id);
         return "redirect:/books/{id}";
     }
 
@@ -81,13 +81,13 @@ public class BooksController {
         if (bindingResult.hasErrors())
             return "books/new";
 
-        bookDAO.save(book);
+        booksService.save(book);
         return "redirect:/books";
     }
 
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable("id") int id, Model model) {
-        model.addAttribute("book", bookDAO.show(id));
+        model.addAttribute("book", booksService.findById(id));
         return "books/edit";
     }
 
@@ -97,13 +97,13 @@ public class BooksController {
         if (bindingResult.hasErrors())
             return "books/edit";
 
-        bookDAO.update(id, book);
+        booksService.update(id, book);
         return "redirect:/books";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
-        bookDAO.delete(id);
+        booksService.delete(id);
         return "redirect:/books";
     }
 }
