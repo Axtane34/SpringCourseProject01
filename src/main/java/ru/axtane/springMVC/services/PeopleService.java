@@ -1,9 +1,7 @@
 package ru.axtane.springMVC.services;
 
 import org.hibernate.Hibernate;
-import org.hibernate.criterion.Example;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.axtane.springMVC.models.Person;

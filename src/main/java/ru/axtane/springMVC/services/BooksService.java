@@ -1,6 +1,8 @@
 package ru.axtane.springMVC.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.axtane.springMVC.models.Book;
@@ -24,6 +26,22 @@ public class BooksService {
 
     public List<Book> findAll(){
         return booksRepository.findAll();
+    }
+
+    public List<Book> findAll(int page, int bpp){
+        return booksRepository.findAll(PageRequest.of(page, bpp)).getContent();
+    }
+
+    public List<Book> findAll(boolean sort){
+        if (sort)
+        return booksRepository.findAll(Sort.by("yearOfWriting"));
+        else return booksRepository.findAll();
+    }
+
+    public List<Book> findAll(int page, int bpp, boolean sort){
+        if (sort)
+            return booksRepository.findAll(PageRequest.of(page, bpp, Sort.by("yearOfWriting"))).getContent();
+        else return booksRepository.findAll(PageRequest.of(page, bpp)).getContent();
     }
 
     public Book findById(int id){
