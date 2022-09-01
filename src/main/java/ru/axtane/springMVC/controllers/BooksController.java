@@ -39,6 +39,13 @@ public class BooksController {
         return "books/index";
     }
 
+    @GetMapping("/search")
+    public String search(Model model, @RequestParam(value = "name", required = false) String name){
+        model.addAttribute("book", new Book());
+        model.addAttribute("result", booksService.findByNameStartingWith(name));
+        return "books/search";
+    }
+
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model book, Model people, @ModelAttribute("person") Person person){
         book.addAttribute("book", booksService.findById(id));

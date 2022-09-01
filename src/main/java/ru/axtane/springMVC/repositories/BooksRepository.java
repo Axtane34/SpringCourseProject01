@@ -6,4 +6,5 @@ import ru.axtane.springMVC.models.Book;
 
 @Repository
 public interface BooksRepository extends JpaRepository<Book, Integer> {
+    Book findByNameStartingWith(String name);
 }

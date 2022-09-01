@@ -4,9 +4,11 @@ import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.axtane.springMVC.models.Book;
 import ru.axtane.springMVC.models.Person;
 import ru.axtane.springMVC.repositories.PeopleRepository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,8 +28,15 @@ public class PeopleService {
     }
 
     public Person findById(int id){
-        peopleRepository.findById(id).ifPresent(person -> Hibernate.initialize(person.getBooks()));
-        return peopleRepository.findById(id).orElse(null);
+        Date now = new Date();
+        Date dateBefore = new Date(now.getTime() - 10 * 24 * 3600 * 1000L);
+        Person person = peopleRepository.findById(id).orElse(null);
+        if (person != null) {
+            for (Book book : person.getBooks()) {
+                book.setExpired(dateBefore.after(book.getRentalTime()));
+            }
+        }
+        return person;
     }
 
     public Optional<Person> findByFio(String fio){

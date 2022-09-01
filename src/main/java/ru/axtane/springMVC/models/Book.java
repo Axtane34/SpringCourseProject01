@@ -1,6 +1,7 @@
 package ru.axtane.springMVC.models;
 
 import javax.persistence.*;
+import java.util.Date;
 
 
 @Entity
@@ -19,6 +20,11 @@ public class Book {
     private String author;
     @Column(name = "yearofwriting")
     private int yearOfWriting;
+    @Column(name = "rentalTime")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date rentalTime;
+    @Transient
+    private boolean expired;
 
     public Book(String name, String author, int yearOfWriting) {
         this.name = name;
@@ -69,9 +75,19 @@ public class Book {
         this.yearOfWriting = yearOfWriting;
     }
 
-    public static void updateBook(Book book, Book updatedBook){
-        book.setAuthor(updatedBook.getAuthor());
-        book.setName(updatedBook.getName());
-        book.setYearOfWriting(updatedBook.getYearOfWriting());
+    public Date getRentalTime() {
+        return rentalTime;
+    }
+
+    public void setRentalTime(Date rentalTime) {
+        this.rentalTime = rentalTime;
+    }
+
+    public boolean isExpired() {
+        return expired;
+    }
+
+    public void setExpired(boolean expired) {
+        this.expired = expired;
     }
 }

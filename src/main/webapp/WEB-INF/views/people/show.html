@@ -13,7 +13,7 @@
     <div th:if="${!person.getBooks().isEmpty()}">
         <hr>
     <p>Книги:</p>
-    <p th:each="book : ${person.getBooks()}"
+    <p th:each="book : ${person.getBooks()}" th:style="${book.isExpired()}? 'color:red' : 'color:black'"
        th:text="${book.getName() + ', '} + ${book.getAuthor() + ', '} + ${book.getYearOfWriting()}"></p>
         <hr>
     </div>

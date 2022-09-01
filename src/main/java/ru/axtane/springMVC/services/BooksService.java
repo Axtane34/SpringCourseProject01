@@ -10,6 +10,9 @@ import ru.axtane.springMVC.models.Person;
 import ru.axtane.springMVC.repositories.BooksRepository;
 import ru.axtane.springMVC.repositories.PeopleRepository;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -48,6 +51,11 @@ public class BooksService {
         return booksRepository.findById(id).orElse(null);
     }
 
+    public Book findByNameStartingWith(String name){
+        if ("".equals(name)) return null;
+        return booksRepository.findByNameStartingWith(name);
+    }
+
     @Transactional
     public void save(Book person){
         booksRepository.save(person);
@@ -69,7 +77,8 @@ public class BooksService {
         Book book = booksRepository.findById(id).orElse(null);
         Person person = peopleRepository.findById(person_id).orElse(null);
         if (person != null && book != null) {
-                person.addBook(book);
+            book.setRentalTime(new Date());
+            person.addBook(book);
         }
         /*jdbcTemplate.update("UPDATE book SET person_id=? WHERE book_id=?", person_id, id);*/
     }
